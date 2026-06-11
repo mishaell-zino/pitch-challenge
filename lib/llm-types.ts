@@ -1,5 +1,7 @@
 // Types for LLM-powered chat with RAG integration
 
+import type { Locale } from "./types"
+
 export interface LLMMessage {
   role: "system" | "user" | "assistant" | "function"
   content: string
@@ -13,6 +15,7 @@ export interface LLMMessage {
 export interface ChatRequest {
   messages: LLMMessage[]
   applicationContext?: string[]
+  locale?: Locale
 }
 
 export interface ChatResponse {

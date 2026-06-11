@@ -60,24 +60,24 @@ export function CaseworkerDashboard() {
 
   return (
     <div className="min-h-dvh bg-background">
-      <header className="border-b border-border bg-card">
+      <header className="border-b border-border bg-[oklch(0.32_0.06_250)] text-white">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-4">
           <div>
-            <h1 className="text-xl font-bold text-card-foreground">{EN("cw.title")}</h1>
-            <p className="text-sm text-muted-foreground">{EN("cw.subtitle")}</p>
+            <h1 className="text-xl font-bold">{EN("cw.title")}</h1>
+            <p className="text-sm text-white/80">{EN("cw.subtitle")}</p>
           </div>
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={() => mutate()}
-              className="inline-flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm font-medium text-card-foreground"
+              className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm font-medium text-white hover:bg-white/20 transition-colors"
             >
               <RefreshCw className={`size-4 ${isLoading ? "animate-spin" : ""}`} />
               <span className="sr-only sm:not-sr-only">Refresh</span>
             </button>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm font-medium text-card-foreground"
+              className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm font-medium text-white hover:bg-white/20 transition-colors"
             >
               <ArrowLeft className="size-4" />
               {EN("cw.backToCitizen")}
@@ -97,14 +97,14 @@ export function CaseworkerDashboard() {
               aria-pressed={filter === f}
               className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors ${
                 filter === f
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-border bg-card text-card-foreground hover:bg-secondary"
+                  ? "border-[oklch(0.32_0.06_250)] bg-[oklch(0.32_0.06_250)] text-white"
+                  : "border-border bg-card text-card-foreground hover:bg-[oklch(0.82_0.03_85)]"
               }`}
             >
               {EN(FILTER_LABEL[f])}
               <span
                 className={`rounded-full px-1.5 text-xs ${
-                  filter === f ? "bg-primary-foreground/20" : "bg-secondary text-muted-foreground"
+                  filter === f ? "bg-white/20" : "bg-secondary text-muted-foreground"
                 }`}
               >
                 {counts[f]}

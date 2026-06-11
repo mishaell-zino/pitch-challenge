@@ -1,12 +1,13 @@
 "use client"
 
 import { useState, useRef, useEffect, useCallback } from "react"
-import { Send, Bot, User, Loader2 } from "lucide-react"
+import { Send, Bot, User, Loader2, Mic } from "lucide-react"
 import type { Application } from "@/lib/types"
 import type { LLMMessage } from "@/lib/llm-types"
 import { StatusTimeline } from "@/components/citizen/status-timeline"
 import { SuggestedActions } from "./suggested-actions"
 import { getSuggestedActions, detectSuggestionContext, type SuggestionContext } from "@/lib/suggested-actions"
+import { useSettings } from "@/components/settings-provider"
 import { cn } from "@/lib/utils"
 
 interface Message {
@@ -23,6 +24,7 @@ interface AIChatInterfaceProps {
 }
 
 export function AIChatInterface({ selectedApplication }: AIChatInterfaceProps) {
+  const { t, locale } = useSettings()
   const [messages, setMessages] = useState<Message[]>([])
   const [isInitialized, setIsInitialized] = useState(false)
   const [suggestionContext, setSuggestionContext] = useState<SuggestionContext>("welcome")
@@ -35,13 +37,30 @@ export function AIChatInterface({ selectedApplication }: AIChatInterfaceProps) {
         {
           id: "welcome",
           role: "assistant",
-          content: "Hello! I'm your AI permit assistant. I can help you check application status, understand permit requirements, and answer questions about the permit process. How can I help you today?",
+          content: t("ai.welcome"),
           timestamp: new Date(),
         },
       ])
       setIsInitialized(true)
     }
-  }, [isInitialized])
+  }, [isInitialized, t])
+
+  // Reset chat when locale changes
+  useEffect(() => {
+    if (isInitialized) {
+      // Reset to welcome message in new language
+      setMessages([
+        {
+          id: "welcome",
+          role: "assistant",
+          content: t("ai.welcome"),
+          timestamp: new Date(),
+        },
+      ])
+      setSuggestionContext("welcome")
+      setLastFunctionCall(undefined)
+    }
+  }, [locale, isInitialized, t])
   const [input, setInput] = useState("")
   const [loading, setLoading] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -142,6 +161,7 @@ export function AIChatInterface({ selectedApplication }: AIChatInterfaceProps) {
       const requestBody = {
         messages: llmMessages,
         applicationContext: selectedApplication ? [selectedApplication.id] : undefined,
+        locale,
       }
       console.log(`[${messageId}]   - Request body:`, JSON.stringify(requestBody, null, 2))
       
@@ -253,7 +273,7 @@ Would you like help with anything else?`
       const errorMessage: Message = {
         id: `error-${Date.now()}`,
         role: "assistant",
-        content: "I'm sorry, I encountered an error. Please try again or contact support if the problem persists.",
+        content: t("ai.error"),
         timestamp: new Date(),
       }
       console.log(`[${messageId}] ⚠️ Added error message to chat`)
@@ -323,7 +343,7 @@ Would you like help with anything else?`
               </div>
               <div className="flex items-center gap-2 rounded-2xl bg-muted px-4 py-3">
                 <Loader2 className="size-4 animate-spin" />
-                <span className="text-sm text-muted-foreground">Thinking...</span>
+                <span className="text-sm text-muted-foreground">{t("ai.thinking")}</span>
               </div>
             </div>
           )}
@@ -335,7 +355,7 @@ Would you like help with anything else?`
         <div className="border-t border-border bg-card/50 px-4 py-3">
           <div className="mx-auto max-w-3xl">
             <SuggestedActions
-              actions={getSuggestedActions(suggestionContext)}
+              actions={getSuggestedActions(suggestionContext, locale)}
               onActionClick={handleActionClick}
             />
           </div>
@@ -350,14 +370,22 @@ Would you like help with anything else?`
             type="text"
             value={input}
             onChange={e => setInput(e.target.value)}
-            placeholder="Ask about permits, check status, or get help..."
+            placeholder={t("ai.inputPlaceholder")}
             disabled={loading}
             className="min-h-12 flex-1 rounded-xl border border-border bg-background px-4 text-sm text-foreground placeholder:text-muted-foreground focus-visible:border-primary focus-visible:outline-none disabled:opacity-50"
           />
           <button
+            type="button"
+            disabled={loading}
+            className="inline-flex size-12 shrink-0 items-center justify-center rounded-xl border-2 border-[oklch(0.32_0.06_250)] bg-white text-[oklch(0.32_0.06_250)] transition-colors hover:bg-[oklch(0.32_0.06_250)] hover:text-white disabled:opacity-40"
+            title="Voice input (coming soon)"
+          >
+            <Mic className="size-5" />
+          </button>
+          <button
             type="submit"
             disabled={!input.trim() || loading}
-            className="inline-flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-40"
+            className="inline-flex size-12 shrink-0 items-center justify-center rounded-xl bg-[oklch(0.32_0.06_250)] text-white transition-colors hover:bg-[oklch(0.28_0.06_250)] disabled:opacity-40"
           >
             <Send className="size-5" />
           </button>

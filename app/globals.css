@@ -51,42 +51,53 @@
 }
 
 :root {
-  /* Civic palette: trustworthy deep blue primary, warm amber accent for
-     attention/actions, on a soft neutral canvas. High contrast for legibility. */
-  --background: oklch(0.985 0.004 247);
-  --foreground: oklch(0.21 0.03 256);
+  /* City of Eastbrook palette: Traditional government navy blue primary,
+     warm beige secondary, with modern accessibility improvements */
+  --background: oklch(0.98 0.008 85);
+  --foreground: oklch(0.25 0.02 260);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.21 0.03 256);
+  --card-foreground: oklch(0.25 0.02 260);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.21 0.03 256);
-  --primary: oklch(0.45 0.13 252);
+  --popover-foreground: oklch(0.25 0.02 260);
+  /* Navy blue from City of Eastbrook header (#1e3a5f) */
+  --primary: oklch(0.32 0.06 250);
   --primary-foreground: oklch(0.99 0.005 247);
-  --secondary: oklch(0.94 0.012 247);
-  --secondary-foreground: oklch(0.3 0.04 256);
-  --muted: oklch(0.95 0.008 247);
-  --muted-foreground: oklch(0.48 0.02 256);
-  --accent: oklch(0.7 0.16 62);
-  --accent-foreground: oklch(0.26 0.05 60);
+  /* Warm beige from navigation bar (#d4c5a9) */
+  --secondary: oklch(0.82 0.03 85);
+  --secondary-foreground: oklch(0.25 0.02 260);
+  --muted: oklch(0.95 0.008 85);
+  --muted-foreground: oklch(0.48 0.02 260);
+  /* Accent for links and actions */
+  --accent: oklch(0.55 0.15 250);
+  --accent-foreground: oklch(0.99 0.005 247);
+  /* Alert/warning red from maintenance banner */
   --destructive: oklch(0.55 0.22 27);
+  --destructive-foreground: oklch(0.99 0.005 247);
   --success: oklch(0.55 0.13 155);
   --success-foreground: oklch(0.99 0.005 247);
-  --border: oklch(0.88 0.012 247);
-  --input: oklch(0.88 0.012 247);
-  --ring: oklch(0.45 0.13 252);
-  --chart-1: oklch(0.45 0.13 252);
+  --border: oklch(0.88 0.012 85);
+  --input: oklch(0.88 0.012 85);
+  --ring: oklch(0.32 0.06 250);
+  --chart-1: oklch(0.32 0.06 250);
   --chart-2: oklch(0.55 0.13 155);
-  --chart-3: oklch(0.7 0.16 62);
-  --chart-4: oklch(0.48 0.02 256);
-  --chart-5: oklch(0.6 0.08 252);
-  --radius: 0.75rem;
-  --sidebar: oklch(0.99 0.004 247);
-  --sidebar-foreground: oklch(0.21 0.03 256);
-  --sidebar-primary: oklch(0.45 0.13 252);
+  --chart-3: oklch(0.55 0.15 250);
+  --chart-4: oklch(0.48 0.02 260);
+  --chart-5: oklch(0.6 0.08 250);
+  --radius: 0.5rem;
+  --sidebar: oklch(0.99 0.004 85);
+  --sidebar-foreground: oklch(0.25 0.02 260);
+  --sidebar-primary: oklch(0.32 0.06 250);
   --sidebar-primary-foreground: oklch(0.99 0.005 247);
-  --sidebar-accent: oklch(0.94 0.012 247);
-  --sidebar-accent-foreground: oklch(0.3 0.04 256);
-  --sidebar-border: oklch(0.88 0.012 247);
-  --sidebar-ring: oklch(0.45 0.13 252);
+  --sidebar-accent: oklch(0.82 0.03 85);
+  --sidebar-accent-foreground: oklch(0.25 0.02 260);
+  --sidebar-border: oklch(0.88 0.012 85);
+  --sidebar-ring: oklch(0.32 0.06 250);
+  
+  /* City of Eastbrook specific colors */
+  --city-navy: oklch(0.32 0.06 250);
+  --city-beige: oklch(0.82 0.03 85);
+  --city-alert: oklch(0.92 0.03 27);
+  --city-alert-text: oklch(0.35 0.08 27);
 }
 
 .dark {

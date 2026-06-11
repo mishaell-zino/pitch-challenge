@@ -2,8 +2,9 @@ import { NextResponse } from "next/server"
 import { getLLMClient } from "@/lib/llm-client"
 import { buildSystemPrompt, buildRAGContext, formatApplicationForContext, getPermitRequirements } from "@/lib/rag-context"
 import { findApplication, listApplications, createEscalation } from "@/lib/case-store"
+import { translate } from "@/lib/i18n"
 import type { LLMMessage, ChatRequest } from "@/lib/llm-types"
-import type { Locale } from "@/lib/types"
+import type { Locale, TranscriptEntry } from "@/lib/types"
 
 export async function POST(request: Request) {
   const requestId = `req-${Date.now()}`
@@ -13,11 +14,12 @@ export async function POST(request: Request) {
   
   try {
     const body = await request.json() as ChatRequest
-    const { messages, applicationContext } = body
+    const { messages, applicationContext, locale = "en" } = body
 
     console.log(`[${requestId}] 📥 Request received:`)
     console.log(`[${requestId}]   - Messages count: ${messages.length}`)
     console.log(`[${requestId}]   - Application context: ${applicationContext?.join(", ") || "none"}`)
+    console.log(`[${requestId}]   - Locale: ${locale}`)
     console.log(`[${requestId}]   - Last user message: "${messages[messages.length - 1]?.content.substring(0, 100)}..."`)
 
     // Build RAG context
@@ -55,7 +57,8 @@ export async function POST(request: Request) {
       const functionResult = await handleFunctionCall(
         response.functionCall.name,
         response.functionCall.arguments,
-        requestId
+        requestId,
+        locale
       )
       console.log(`[${requestId}] ✅ Function executed successfully`)
       console.log(`[${requestId}]   - Result:`, JSON.stringify(functionResult, null, 2))
@@ -90,7 +93,7 @@ export async function POST(request: Request) {
 /**
  * Handle function/tool calls from the LLM
  */
-async function handleFunctionCall(name: string, args: Record<string, any>, requestId: string) {
+async function handleFunctionCall(name: string, args: Record<string, any>, requestId: string, locale: Locale = "en") {
   console.log(`[${requestId}]   🔧 Executing function: ${name}`)
   console.log(`[${requestId}]   📋 Arguments:`, JSON.stringify(args, null, 2))
   
@@ -146,19 +149,66 @@ async function handleFunctionCall(name: string, args: Record<string, any>, reque
       console.log(`[${requestId}]   🚨 Creating escalation`)
       console.log(`[${requestId}]   📋 Reason: ${args.reason}`)
       console.log(`[${requestId}]   💬 Details: ${args.details}`)
+      console.log(`[${requestId}]   📝 Conversation messages: ${args.conversationHistory?.length || 0}`)
+      
+      // Summarize conversation using LLM
+      let summary = args.details || "User requested to speak with a caseworker"
+      let transcript: TranscriptEntry[] = []
+      
+      if (args.conversationHistory && args.conversationHistory.length > 0) {
+        console.log(`[${requestId}]   🤖 Generating conversation summary...`)
+        try {
+          const summaryPrompt = `Summarize the following conversation between a citizen and an AI assistant. Focus on:
+1. What the citizen needs help with
+2. Key details mentioned (application IDs, permit types, specific issues)
+3. Any outstanding questions or concerns
+
+Keep the summary concise (2-3 sentences) and professional.
+
+Conversation:
+${args.conversationHistory.map((msg: any) => `${msg.role === 'user' ? 'Citizen' : 'Assistant'}: ${msg.content}`).join('\n')}
+
+Summary:`
+
+          const llmClient = getLLMClient()
+          const summaryResponse = await llmClient.chat([
+            { role: "user", content: summaryPrompt }
+          ])
+          
+          summary = summaryResponse.message.trim()
+          console.log(`[${requestId}]   ✅ Summary generated: "${summary.substring(0, 100)}..."`)
+        } catch (error) {
+          console.error(`[${requestId}]   ❌ Failed to generate summary:`, error)
+          // Fall back to basic summary
+        }
+        
+        // Convert conversation to transcript format
+        transcript = args.conversationHistory.map((msg: any) => ({
+          role: msg.role === 'user' ? 'citizen' as const : 'bot' as const,
+          text: msg.content,
+        }))
+        console.log(`[${requestId}]   📋 Transcript entries: ${transcript.length}`)
+      }
       
       const escalation = createEscalation({
-        locale: "en" as Locale,
+        locale,
         reason: args.reason,
-        detail: args.details,
-        transcript: [],
+        detail: summary,
+        transcript,
       })
       
       console.log(`[${requestId}]   ✅ Escalation created: ${escalation.id}`)
+      console.log(`[${requestId}]   📊 Summary: "${summary}"`)
+      console.log(`[${requestId}]   📝 Full transcript: ${transcript.length} messages`)
+      
+      // Use translated escalation success message
+      const translatedMessage = translate(locale, "ai.escalation.success", { id: escalation.id })
+      
       return {
         success: true,
         escalationId: escalation.id,
-        message: `Your request has been escalated to a caseworker. Reference number: ${escalation.id}`,
+        summary,
+        message: translatedMessage,
       }
     }
 

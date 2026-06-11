@@ -232,7 +232,7 @@ export class LLMClient {
         type: "function",
         function: {
           name: "escalate_to_human",
-          description: "Escalate the conversation to a human caseworker",
+          description: "Escalate the conversation to a human caseworker. This will summarize the conversation and create an escalation ticket.",
           parameters: {
             type: "object",
             properties: {
@@ -243,10 +243,26 @@ export class LLMClient {
               },
               details: {
                 type: "string",
-                description: "Additional details about why escalation is needed",
+                description: "Brief description of what the citizen needs help with",
+              },
+              conversationHistory: {
+                type: "array",
+                description: "The full conversation history to be included with the escalation",
+                items: {
+                  type: "object",
+                  properties: {
+                    role: {
+                      type: "string",
+                      enum: ["user", "assistant"],
+                    },
+                    content: {
+                      type: "string",
+                    },
+                  },
+                },
               },
             },
-            required: ["reason", "details"],
+            required: ["reason", "details", "conversationHistory"],
           },
         },
       },

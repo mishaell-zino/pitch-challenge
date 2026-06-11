@@ -147,6 +147,11 @@ const en: Dict = {
   "common.assistant": "Assistant",
   "common.yes": "Yes",
   "common.no": "No",
+  "common.application": "application",
+  "common.applications": "applications",
+  "common.action": "action",
+  "common.actions": "actions",
+  "common.needed": "needed",
 
   // Caseworker dashboard
   "cw.title": "Caseworker Queue",
@@ -177,6 +182,28 @@ const en: Dict = {
   "cw.detail": "Citizen's words",
   "cw.queueCount": "in queue",
   "cw.noContextLost": "The citizen will not be asked to repeat any of this.",
+
+  // AI Chat
+  "ai.welcome": "Hello! I'm your AI permit assistant. I can help you check application status, understand permit requirements, and answer questions about the permit process. How can I help you today?",
+  "ai.inputPlaceholder": "Ask about permits, check status, or get help...",
+  "ai.thinking": "Thinking...",
+  "ai.error": "I'm sorry, I encountered an error. Please try again or contact support if the problem persists.",
+  "ai.action.checkStatus": "Check my application status",
+  "ai.action.applyPermit": "Help me apply for a permit",
+  "ai.action.talkPerson": "Talk to a person",
+  "ai.action.explainStage": "What does this stage mean?",
+  "ai.action.checkAnother": "Check another application",
+  "ai.action.buildingPermit": "Building permit",
+  "ai.action.renovation": "Renovation permit",
+  "ai.action.demolition": "Demolition permit",
+  "ai.action.zoningVariance": "Zoning variance",
+  "ai.action.startApplication": "Start my application",
+  "ai.action.askQuestion": "I have a question",
+  "ai.action.startOver": "Start over",
+  "ai.sidebar.title": "Your Applications",
+  "ai.sidebar.empty": "No applications yet",
+  "ai.sidebar.loading": "Loading applications...",
+  "ai.escalation.success": "Thank you! I've connected you with a caseworker who will review your request. Your reference number is {id}. A caseworker will reach out to you soon.\n\nIs there anything else I can help you with?",
 }
 
 const es: Dict = {
@@ -295,6 +322,11 @@ const es: Dict = {
   "common.assistant": "Asistente",
   "common.yes": "Sí",
   "common.no": "No",
+  "common.application": "solicitud",
+  "common.applications": "solicitudes",
+  "common.action": "acción",
+  "common.actions": "acciones",
+  "common.needed": "necesaria",
 
   "cw.title": "Cola de Trabajadores del Caso",
   "cw.subtitle": "Casos escalados con todo el contexto precargado.",
@@ -324,6 +356,28 @@ const es: Dict = {
   "cw.detail": "Palabras del ciudadano",
   "cw.queueCount": "en cola",
   "cw.noContextLost": "No se le pedirá al ciudadano que repita nada de esto.",
+
+  // AI Chat
+  "ai.welcome": "¡Hola! Soy su asistente de permisos con IA. Puedo ayudarle a verificar el estado de solicitudes, entender los requisitos de permisos y responder preguntas sobre el proceso. ¿Cómo puedo ayudarle hoy?",
+  "ai.inputPlaceholder": "Pregunte sobre permisos, verifique el estado o obtenga ayuda...",
+  "ai.thinking": "Pensando...",
+  "ai.error": "Lo siento, encontré un error. Por favor intente de nuevo o contacte al soporte si el problema persiste.",
+  "ai.action.checkStatus": "Consultar el estado de mi solicitud",
+  "ai.action.applyPermit": "Ayúdeme a solicitar un permiso",
+  "ai.action.talkPerson": "Hablar con una persona",
+  "ai.action.explainStage": "¿Qué significa esta etapa?",
+  "ai.action.checkAnother": "Consultar otra solicitud",
+  "ai.action.buildingPermit": "Permiso de construcción",
+  "ai.action.renovation": "Permiso de renovación",
+  "ai.action.demolition": "Permiso de demolición",
+  "ai.action.zoningVariance": "Variación de zonificación",
+  "ai.action.startApplication": "Iniciar mi solicitud",
+  "ai.action.askQuestion": "Tengo una pregunta",
+  "ai.action.startOver": "Empezar de nuevo",
+  "ai.sidebar.title": "Sus Solicitudes",
+  "ai.sidebar.empty": "Aún no hay solicitudes",
+  "ai.sidebar.loading": "Cargando solicitudes...",
+  "ai.escalation.success": "¡Gracias! Le he conectado con un trabajador del caso que revisará su solicitud. Su número de referencia es {id}. Un trabajador del caso se comunicará con usted pronto.\n\n¿Hay algo más en lo que pueda ayudarle?",
 }
 
 const ar: Dict = {
@@ -442,6 +496,11 @@ const ar: Dict = {
   "common.assistant": "المساعد",
   "common.yes": "نعم",
   "common.no": "لا",
+  "common.application": "طلب",
+  "common.applications": "طلبات",
+  "common.action": "إجراء",
+  "common.actions": "إجراءات",
+  "common.needed": "مطلوب",
 
   "cw.title": "قائمة أخصائيي الحالة",
   "cw.subtitle": "حالات مُصعّدة مع تحميل السياق الكامل مسبقاً.",
@@ -471,6 +530,28 @@ const ar: Dict = {
   "cw.detail": "كلمات المواطن",
   "cw.queueCount": "في القائمة",
   "cw.noContextLost": "لن يُطلب من المواطن تكرار أي من هذا.",
+
+  // AI Chat
+  "ai.welcome": "مرحباً! أنا مساعدك الذكي للتصاريح. يمكنني مساعدتك في التحقق من حالة الطلب، وفهم متطلبات التصاريح، والإجابة على الأسئلة حول عملية التصريح. كيف يمكنني مساعدتك اليوم؟",
+  "ai.inputPlaceholder": "اسأل عن التصاريح، تحقق من الحالة، أو احصل على المساعدة...",
+  "ai.thinking": "جارٍ التفكير...",
+  "ai.error": "عذراً، واجهت خطأ. يرجى المحاولة مرة أخرى أو الاتصال بالدعم إذا استمرت المشكلة.",
+  "ai.action.checkStatus": "تحقق من حالة طلبي",
+  "ai.action.applyPermit": "ساعدني في التقدم للحصول على تصريح",
+  "ai.action.talkPerson": "التحدث مع شخص",
+  "ai.action.explainStage": "ماذا تعني هذه المرحلة؟",
+  "ai.action.checkAnother": "تحقق من طلب آخر",
+  "ai.action.buildingPermit": "تصريح بناء",
+  "ai.action.renovation": "تصريح تجديد",
+  "ai.action.demolition": "تصريح هدم",
+  "ai.action.zoningVariance": "تباين تقسيم المناطق",
+  "ai.action.startApplication": "ابدأ طلبي",
+  "ai.action.askQuestion": "لدي سؤال",
+  "ai.action.startOver": "ابدأ من جديد",
+  "ai.sidebar.title": "طلباتك",
+  "ai.sidebar.empty": "لا توجد طلبات بعد",
+  "ai.sidebar.loading": "جارٍ تحميل الطلبات...",
+  "ai.escalation.success": "شكراً لك! لقد قمت بتوصيلك بموظف الحالة الذي سيراجع طلبك. رقم المرجع الخاص بك هو {id}. سيتواصل معك موظف الحالة قريباً.\n\nهل هناك أي شيء آخر يمكنني مساعدتك به؟",
 }
 
 const dictionaries: Record<Locale, Dict> = { en, es, ar }

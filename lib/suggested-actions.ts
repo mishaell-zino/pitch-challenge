@@ -1,123 +1,130 @@
 import { Search, ClipboardList, UserRound, HelpCircle, Building, Hammer, Trash2, Map, RefreshCw } from "lucide-react"
 import type { SuggestedAction } from "@/components/ai-chat/suggested-actions"
-import type { PermitType } from "./types"
+import type { PermitType, Locale } from "./types"
+import { translate } from "./i18n"
 
 /**
  * Suggested actions for different conversation contexts
  */
 
-// Welcome actions shown on initial load
-export const WELCOME_ACTIONS: SuggestedAction[] = [
-  {
-    id: "check-status",
-    label: "Check my application status",
-    icon: Search,
-    prompt: "I want to check the status of my application",
-    tone: "primary"
-  },
-  {
-    id: "apply-permit",
-    label: "Help me apply for a permit",
-    icon: ClipboardList,
-    prompt: "I need help applying for a permit",
-  },
-  {
-    id: "talk-human",
-    label: "Talk to a person",
-    icon: UserRound,
-    prompt: "I need to speak with a caseworker",
-  }
-]
+// Helper function to get translated actions
+function getWelcomeActions(locale: Locale): SuggestedAction[] {
+  return [
+    {
+      id: "check-status",
+      label: translate(locale, "ai.action.checkStatus"),
+      icon: Search,
+      prompt: translate(locale, "ai.action.checkStatus"),
+      tone: "primary"
+    },
+    {
+      id: "apply-permit",
+      label: translate(locale, "ai.action.applyPermit"),
+      icon: ClipboardList,
+      prompt: translate(locale, "ai.action.applyPermit"),
+    },
+    {
+      id: "talk-human",
+      label: translate(locale, "ai.action.talkPerson"),
+      icon: UserRound,
+      prompt: translate(locale, "ai.action.talkPerson"),
+    }
+  ]
+}
 
-// Actions shown after displaying application status
-export const STATUS_FOLLOWUP_ACTIONS: SuggestedAction[] = [
-  {
-    id: "explain-stage",
-    label: "What does this stage mean?",
-    icon: HelpCircle,
-    prompt: "Can you explain what the current stage means?"
-  },
-  {
-    id: "check-another",
-    label: "Check another application",
-    icon: Search,
-    prompt: "I want to check another application"
-  },
-  {
-    id: "talk-human",
-    label: "Talk to a person",
-    icon: UserRound,
-    prompt: "I need to speak with a caseworker about this application",
-  }
-]
+function getStatusFollowupActions(locale: Locale): SuggestedAction[] {
+  return [
+    {
+      id: "explain-stage",
+      label: translate(locale, "ai.action.explainStage"),
+      icon: HelpCircle,
+      prompt: translate(locale, "ai.action.explainStage")
+    },
+    {
+      id: "check-another",
+      label: translate(locale, "ai.action.checkAnother"),
+      icon: Search,
+      prompt: translate(locale, "ai.action.checkAnother")
+    },
+    {
+      id: "talk-human",
+      label: translate(locale, "ai.action.talkPerson"),
+      icon: UserRound,
+      prompt: translate(locale, "ai.action.talkPerson"),
+    }
+  ]
+}
 
-// Actions for selecting permit type
-export const PERMIT_TYPE_ACTIONS: SuggestedAction[] = [
-  {
-    id: "building-permit",
-    label: "Building permit",
-    icon: Building,
-    prompt: "I need a building permit for new construction"
-  },
-  {
-    id: "renovation",
-    label: "Renovation permit",
-    icon: Hammer,
-    prompt: "I need a renovation permit"
-  },
-  {
-    id: "demolition",
-    label: "Demolition permit",
-    icon: Trash2,
-    prompt: "I need a demolition permit"
-  },
-  {
-    id: "zoning-variance",
-    label: "Zoning variance",
-    icon: Map,
-    prompt: "I need a zoning variance"
-  }
-]
+function getPermitTypeActions(locale: Locale): SuggestedAction[] {
+  return [
+    {
+      id: "building-permit",
+      label: translate(locale, "ai.action.buildingPermit"),
+      icon: Building,
+      prompt: translate(locale, "ai.action.buildingPermit")
+    },
+    {
+      id: "renovation",
+      label: translate(locale, "ai.action.renovation"),
+      icon: Hammer,
+      prompt: translate(locale, "ai.action.renovation")
+    },
+    {
+      id: "demolition",
+      label: translate(locale, "ai.action.demolition"),
+      icon: Trash2,
+      prompt: translate(locale, "ai.action.demolition")
+    },
+    {
+      id: "zoning-variance",
+      label: translate(locale, "ai.action.zoningVariance"),
+      icon: Map,
+      prompt: translate(locale, "ai.action.zoningVariance")
+    }
+  ]
+}
 
-// Actions shown after displaying permit requirements
-export const REQUIREMENTS_FOLLOWUP_ACTIONS: SuggestedAction[] = [
-  {
-    id: "start-application",
-    label: "Start my application",
-    icon: ClipboardList,
-    prompt: "I'm ready to start my application",
-    tone: "primary"
-  },
-  {
-    id: "ask-question",
-    label: "I have a question",
-    icon: HelpCircle,
-    prompt: "I have a question about the requirements"
-  },
-  {
-    id: "talk-human",
-    label: "Talk to a person",
-    icon: UserRound,
-    prompt: "I need help from a caseworker",
-  }
-]
+function getRequirementsFollowupActions(locale: Locale): SuggestedAction[] {
+  return [
+    {
+      id: "start-application",
+      label: translate(locale, "ai.action.startApplication"),
+      icon: ClipboardList,
+      prompt: translate(locale, "ai.action.startApplication"),
+      tone: "primary"
+    },
+    {
+      id: "ask-question",
+      label: translate(locale, "ai.action.askQuestion"),
+      icon: HelpCircle,
+      prompt: translate(locale, "ai.action.askQuestion")
+    },
+    {
+      id: "talk-human",
+      label: translate(locale, "ai.action.talkPerson"),
+      icon: UserRound,
+      prompt: translate(locale, "ai.action.talkPerson"),
+    }
+  ]
+}
 
-// Generic conversation actions
-export const CONVERSATION_ACTIONS: SuggestedAction[] = [
-  {
-    id: "start-over",
-    label: "Start over",
-    icon: RefreshCw,
-    prompt: "I want to start over",
-    tone: "muted"
-  },
-  {
-    id: "talk-human",
-    label: "Talk to a person",
-    icon: UserRound,
-    prompt: "I need to speak with a caseworker",
-  }
-]
+function getConversationActions(locale: Locale): SuggestedAction[] {
+  return [
+    {
+      id: "start-over",
+      label: translate(locale, "ai.action.startOver"),
+      icon: RefreshCw,
+      prompt: translate(locale, "ai.action.startOver"),
+      tone: "muted"
+    },
+    {
+      id: "talk-human",
+      label: translate(locale, "ai.action.talkPerson"),
+      icon: UserRound,
+      prompt: translate(locale, "ai.action.talkPerson"),
+    }
+  ]
+}
 
 /**
  * Context types for determining which actions to show
@@ -135,6 +142,7 @@ export type SuggestionContext =
  */
 export function getSuggestedActions(
   context: SuggestionContext,
+  locale: Locale = "en",
   metadata?: {
     hasApplication?: boolean
     permitType?: PermitType
@@ -143,19 +151,19 @@ export function getSuggestedActions(
 ): SuggestedAction[] {
   switch (context) {
     case "welcome":
-      return WELCOME_ACTIONS
+      return getWelcomeActions(locale)
     
     case "after-status-check":
-      return STATUS_FOLLOWUP_ACTIONS
+      return getStatusFollowupActions(locale)
     
     case "permit-type-selection":
-      return PERMIT_TYPE_ACTIONS
+      return getPermitTypeActions(locale)
     
     case "after-requirements":
-      return REQUIREMENTS_FOLLOWUP_ACTIONS
+      return getRequirementsFollowupActions(locale)
     
     case "conversation-active":
-      return CONVERSATION_ACTIONS
+      return getConversationActions(locale)
     
     case "none":
     default:
